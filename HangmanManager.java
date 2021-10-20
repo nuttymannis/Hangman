@@ -3,14 +3,22 @@ import java.util.*;
 public class HangmanManager
 {
 	
-	int guesses = 0;
+	int guesses;
+	int guessMax;
+	
+	int wordLength;
 	
 	Set<String> words = new HashSet<String>();
 	Set<Character> prevGuesses = new HashSet<Character>();
 	
 	public HangmanManager( List<String> dictionary, int length, int max )
 	{
+		words = (Set<String>) dictionary;
 		
+		guesses = 0;
+		guessMax = max;
+		
+		wordLength = length;
 	}
 	
 	public Set<String> words()
