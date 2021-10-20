@@ -2,6 +2,12 @@ import java.util.*;
 
 public class HangmanManager
 {
+	
+	int guesses = 0;
+	
+	Set<String> words = new HashSet<String>();
+	Set<Character> prevGuesses = new HashSet<Character>();
+	
 	public HangmanManager( List<String> dictionary, int length, int max )
 	{
 		
@@ -9,17 +15,17 @@ public class HangmanManager
 	
 	public Set<String> words()
 	{
-		return null;
+		return words;
 	}	
 	
 	public int guessesLeft()
 	{
-		return 0;
+		return guesses;
 	}
 		
 	public Set<Character> guesses()
 	{
-		return null;
+		return prevGuesses;
 	}
 	
 	public String pattern()
@@ -29,6 +35,7 @@ public class HangmanManager
 	
 	public int record( char guess )
 	{
-		return 0;
+		prevGuesses.add(guess);
+		return guess;
 	}
 }
