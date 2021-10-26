@@ -2,83 +2,56 @@ import java.util.*;
 
 public class HangmanManager
 {
-	private Set<Character> guesses;
-	private Set<String> words;
-	private int guessesleft;
-	private String pattern;
+	
+	int guesses;
+	
+	int wordLength;
+	
+	Set<String> dict = new HashSet<String>();
+	Set<Character> prevGuesses = new HashSet<Character>();
+	Set<String> words = new HashSet<String>();
+	
 	public HangmanManager( List<String> dictionary, int length, int max )
 	{
-		guessesleft = max;
-		guesses = new TreeSet<Character>();
-		words = new TreeSet<String>();
-		for(String s : dictionary) {
-			if(s.length() == length) {
-				words.add(s);
-			}
+		for(int i = 0; i < dictionary.size(); i++) {
+			dict.add(dictionary.get(i));
 		}
 		
+		guesses = max;
+		
+		wordLength = length;
+		
+		for(String x : dict) {
+			if(x.length() == wordLength) {
+				words.add(x);
+			}
+		}
 	}
 	
 	public Set<String> words()
 	{
-		return words ;
+		return words;
 	}	
 	
 	public int guessesLeft()
 	{
-		return guessesleft;
+		guesses = guesses - 1;
+		return guesses;
 	}
 		
 	public Set<Character> guesses()
 	{
-		return guesses;
+		return prevGuesses;
 	}
 	
 	public String pattern()
 	{
-		return pattern;
+		return "";
 	}
 	
 	public int record( char guess )
 	{
-		Map<String,Set<String>> families = new TreeMap<String,Set<String>>();
-		String newPattern = "";
-		guesses.add(guess);
-		newPattern = "";
-		for(String s : words) {
-			for(int i = 0; i < s.length(); i++) {
-				if(s.substring(i,i+1).equals("" + guess)) {
-					newPattern += guess;
-					
-				}
-				else if(pattern.substring(i,i+1).equals(s.substring(i,i+1))) {
-					newPattern += pattern.substring(i,i+1);
-				}
-				else {
-					newPattern += "-";
-				}
-			}
-			if(families.containsKey(newPattern)) {
-				families.get(newPattern).add(s);
-			}
-			else {
-				families.put(newPattern, new TreeSet<String>());
-				families.get(newPattern).add(s);
-			}
-		}
-		words = families.get(newPattern);
-		for(String s : families.keySet()) {
-			if(families.get(s).size() > words.size()) {
-				words = families.get(s);
-				pattern = s;
-			}
-		}
-		int count = 0;
-		for(int i = 0; i < pattern.length(); i++) {
-			if(pattern.substring(i, i+1).equals("" + guess)) {
-				count++;
-			}
-		}
-		return count;
+		prevGuesses.add(guess);
+		return guess;
 	}
 }
