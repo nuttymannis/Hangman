@@ -11,6 +11,8 @@ public class HangmanManager
 	Set<Character> prevGuesses = new HashSet<Character>();
 	Set<String> words = new HashSet<String>();
 	
+	String word;
+	
 	public HangmanManager( List<String> dictionary, int length, int max )
 	{
 		for(int i = 0; i < dictionary.size(); i++) {
@@ -26,6 +28,9 @@ public class HangmanManager
 				words.add(x);
 			}
 		}
+		
+		word = words.iterator().next();
+		System.out.println(word);
 	}
 	
 	public Set<String> words()
@@ -46,7 +51,26 @@ public class HangmanManager
 	
 	public String pattern()
 	{
-		return "";
+		String a = "";
+		for(int i = 0; i < word.length(); i++) {
+			if(prevGuesses.size() != 0) {
+				for(char x : prevGuesses) {
+					if(x == word.charAt(i)) {
+						System.out.println("adding: " + word.charAt(i));
+						a += word.charAt(i);
+					}
+					else if(x == 0){
+						System.out.println("Not adding");
+						a += "-";
+					}
+				}
+			} else {
+				a += "-";
+			}
+		}
+		
+		return a;
+		
 	}
 	
 	public int record( char guess )
